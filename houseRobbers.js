@@ -14,9 +14,36 @@
 /////////////////////////////////////////////////////////////
 
 var testCase = [123, 12345, 1, 2, 543, 41];
+var simpleTestCase = [1,2,3];
 
 var houseRobbers = function (houses) {
-  // TODO: Implement me!
+  var bestMoneySoFar = [];
+  houses[-1] = 0;
+  houses[-2] = 0;
+  houses[-3] = 0;
+  bestMoneySoFar[-1] = 0;
+  bestMoneySoFar[-2] = 0;
+  bestMoneySoFar[-3] = 0;
+
+  robHouse(houses.length-1);
+
+  function robHouse(houseIndex){
+    if( bestMoneySoFar[houseIndex] !== undefined ) return bestMoneySoFar[houseIndex]; 
+    else{
+      bestMoneySoFar[houseIndex] = Math.max( 
+          robHouse(houseIndex - 1),
+          robHouse(houseIndex - 2) + houses[houseIndex],
+          robHouse(houseIndex - 3) + houses[houseIndex] )
+        return bestMoneySoFar[houseIndex];
+    }
+  }
+
+  var length = houses.length;
+  var result = Math.max( bestMoneySoFar[length-1], bestMoneySoFar[length-2], bestMoneySoFar[length-3]);
+
+  return result;
+
 };
 
 console.log(houseRobbers(testCase) === 12888);
+console.log(houseRobbers(simpleTestCase) === 4);
