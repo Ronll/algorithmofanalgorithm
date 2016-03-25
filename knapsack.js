@@ -1,3 +1,4 @@
+"strict mode";
 /////////////////////////////////////////////////////////////
 //  Thief's knapsack
 // --------------------------
@@ -12,7 +13,33 @@
 
 
 var knapsack = function (weights, maxWeight) {
-  // TODO: Implement!
+
+  var bestForWeight = [];
+  bestForWeight[-1] = 0;
+
+  function findBestForWeight( weights, maxWeight, bestForWeight) {
+    var currentWeight = bestForWeight.length + 1;
+    var currentIndex = bestForWeight.length;
+
+    console.log(bestForWeight)
+
+    if( currentWeight === maxWeight + 1 ) return bestForWeight[maxWeight - 1];
+
+    var currentOptions = [];
+    for( weight in weights ){
+      if( weight <= currentWeight ) {
+        currentOptions.push(
+            bestForWeight[currentIndex - weight] + weights[weight]     
+            ); 
+      }
+    }
+
+    bestForWeight[currentIndex] =  Math.max( ...currentOptions ) ;
+
+    return findBestForWeight( weights, maxWeight, bestForWeight );
+  };
+
+  return findBestForWeight( weights, maxWeight, bestForWeight );
 };
 
 /////////////////////////////////////////////////////////////
@@ -29,4 +56,5 @@ var weights = {
 
 var maxWeight = 50;
 
-console.log('Pass? ', knapsack(weights, maxWeight) === 146);
+
+console.log('Pass? ', knapsack(weights, maxWeight) === 146, knapsack(weights, maxWeight));
