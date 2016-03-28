@@ -18,13 +18,18 @@ var countPaths = function (matrix, row, col) {
 var countPathsDynamic = function (n, m) {
   var pathCount = 0;
   
-  var recursivePathCount = function (n,m,countForPosition){
-    countForPosition[n,m] = recursivePathCount( n-1, m ) +
-                            recursivePathCount(n + 1, m), recursivePathCount(n, m - 1) + recursivePathCount(n, m + 1);
+  var recursivePathCount = function (N,M,n,m,countForPosition){
+
+    if(n > N || m > M) return 0;
+
+    countForPosition[n,m] = recursivePathCount(n - 1, m) +
+                            recursivePathCount(n + 1, m) +
+                            recursivePathCount(n, m - 1) +
+                            recursivePathCount(n, m + 1);
   }
 
 
-  recursivePathCount( n, m, []);
+  recursivePathCount( n, m, n, m, []);
 };
 
 /////////////////////////////////////////////////////////////
